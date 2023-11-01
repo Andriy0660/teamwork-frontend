@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="754.0" prefWidth="735.0" styleClass="transparentFocus" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teamdeveloping.HelloController">
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+
+    <children>
+
+
+<!--        <Pane layoutY="600.0" prefHeight="171.0" prefWidth="563.0">-->
+<!--            <children>-->
+<!--                <VBox prefHeight="171.0" prefWidth="87.0">-->
+<!--                    <children>-->
+<!--                        <Button  mnemonicParsing="false" prefHeight="57.0" prefWidth="87.0" text="Додати запис" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS" wrapText="true">-->
+<!--                            <font>-->
+<!--                                <Font name="Cambria Bold" size="12.0" />-->
+<!--                            </font>-->
+<!--                        </Button>-->
+<!--                        <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="87.0" text="Обчислити зарплату" textAlignment="CENTER" wrapText="true">-->
+<!--                            <font>-->
+<!--                                <Font name="Cambria Bold" size="12.0" />-->
+<!--                            </font>-->
+<!--                        </Button>-->
+<!--                        <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="87.0" text="Історія миття" textAlignment="CENTER" wrapText="true">-->
+<!--                            <font>-->
+<!--                                <Font name="Cambria Bold" size="12.0" />-->
+<!--                            </font></Button>-->
+<!--                    </children>-->
+<!--                </VBox>-->
+<!--            </children>-->
+<!--        </Pane>-->
+        <Pane fx:id="mainPane" prefHeight="204.0" prefWidth="398.0" style="-fx-background-color: #dce9ff;">
+            <children>
+                <ComboBox layoutX="27.0" layoutY="42.0" prefHeight="38.0" prefWidth="150.0" promptText="Працівники" style="-fx-font-size: 16; -fx-font-family: Cambria;" styleClass="button1" />
+            <ComboBox layoutX="27.0" layoutY="93.0" prefHeight="38.0" prefWidth="150.0" promptText="Тип миття" style="-fx-font-size: 16; -fx-font-family: Cambria;" styleClass="button1" />
+            <Button layoutX="27.0" layoutY="145.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="150.0" style="-fx-font-family: Cambria; -fx-font-size: 16;" styleClass="button1" text="Додати" />
+            <Label layoutX="40.0" layoutY="12.0" text="Додати запис" textFill="#242b8b">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="257.0" layoutY="12.0" text="Зарплата" textFill="#242b8b">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Label>
+            <ComboBox layoutX="219.0" layoutY="42.0" prefHeight="38.0" prefWidth="150.0" promptText="Працівник" style="-fx-font-size: 16; -fx-font-family: Cambria;" styleClass="button1" />
+            <DatePicker layoutX="219.0" layoutY="93.0" prefHeight="38.0" prefWidth="150.0" promptText="01.11.2023" style="-fx-font-family: Cambria; -fx-font-size: 16; -fx-background-radius: 8; -fx-border-radius: 8;" />
+            <Button layoutX="219.0" layoutY="145.0" mnemonicParsing="false" onAction="#onAction" prefHeight="38.0" prefWidth="150.0" style="-fx-font-family: Cambria; -fx-font-size: 16;" styleClass="button1" text="Обчислити" />
+            <Line fx:id="line" endX="7.0" endY="142.57139587402344" layoutX="120.0" layoutY="-28.0" rotate="90.0" startX="151.0" startY="142.03929138183594" stroke="#242b8b" />
+            </children>
+        </Pane>
+      <Pane fx:id="resultPane" layoutX="217.0" layoutY="300.0" prefHeight="118.0" prefWidth="153.0" style="-fx-background-radius: 15; -fx-border-color: #242b8b; -fx-border-radius: 15; -fx-background-color: #dce9ff;">
+         <children>
+            <Label layoutX="8.0" layoutY="4.0" prefHeight="64.0" prefWidth="150.0" text="Іван за 01.11.2023 повинен отримати  200грн" textFill="#242b8b" wrapText="true">
+               <font>
+                  <Font name="Cambria" size="16.0" />
+               </font>
+            </Label>
+            <Button layoutX="28.0" layoutY="79.0" mnemonicParsing="false" onAction="#cancelOAction" prefWidth="100.0" styleClass="button1" text="Назад" />
+         </children>
+      </Pane>
+    </children>
+</Pane>
