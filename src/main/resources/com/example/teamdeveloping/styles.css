@@ -16,6 +16,7 @@
     -fx-background-radius: 8;
     -fx-text-fill: #242b8b;
 }
+
 .combo-box .list-cell {
     -fx-text-fill: #242b8b;
     -fx-background-color: transparent;
@@ -58,12 +59,8 @@
 .date-picker .arrow-button:pressed {
     -fx-background-color: #778eb5;
 }
-
-/*.date-picker .date-picker-popup .calendar-view {*/
-/*    -fx-background-color: #dce9ff; !* Задайте бажаний колір фону *!*/
-/*}*/
 .date-picker-popup  {
-    -fx-background-color: #dce9ff; /* Задайте бажаний колір фону */
+    -fx-background-color: #dce9ff;
     -fx-translate-x: 200;
     -fx-translate-y: -155;
 }

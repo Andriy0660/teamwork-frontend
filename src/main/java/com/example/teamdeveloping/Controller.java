@@ -1,9 +1,6 @@
 package com.example.teamdeveloping;
 
-import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -11,11 +8,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 
 public class Controller {
+    ApiService apiService = new ApiService();
+    HashSet<String> namesOfAllEmps;
     @FXML
     private Pane mainPane;
     @FXML
@@ -24,8 +25,7 @@ public class Controller {
     private Line line;
 
     //add record
-    @FXML
-    private Button addRecordSelectEmps;
+    private final HashSet<String> namesOfSelectedEmps = new HashSet<>();
     @FXML
     private ComboBox<String> addRecordSelectTypeOfWashing;
     @FXML
@@ -43,59 +43,118 @@ public class Controller {
     @FXML
     private Label resultLabel;
     @FXML
-    private Button cancelButton;
-    @FXML
     private Pane empsPane;
     @FXML
     private VBox empsBox;
 
     public void initialize(){
+        //add record
+        //namesOfAllEmps = apiService.getAllEmps();
+        namesOfAllEmps = new HashSet<>();
+        namesOfAllEmps.add("Микола");
+        namesOfAllEmps.add("Петро");
+        namesOfAllEmps.add("Василь");
 
-        HBox pair1 = createLabelCheckBoxPair("Label 1");
-        HBox pair2 = createLabelCheckBoxPair("Label 2");
-        HBox pair3 = createLabelCheckBoxPair("Label 3");
-//        HBox pair4 = createLabelCheckBoxPair("Label 3");
-//        HBox pair5 = createLabelCheckBoxPair("Label 3");
-//        HBox pair6 = createLabelCheckBoxPair("Label 3");
+        List<HBox> namesAndCheckBoxesForAllEmps = namesOfAllEmps.stream().map(this::createLabelCheckBoxPair).toList();
+        empsBox.getChildren().addAll(namesAndCheckBoxesForAllEmps);
 
-        empsBox.getChildren().addAll(pair1, pair2, pair3);
-        List<String> selectedNamesOfEmps = empsBox.getChildren().stream()
-                .map(i->(HBox)i)
-                .filter(i -> ((CheckBox)i.getChildren().get(1)).isSelected())
-                .map(i->((Label)i.getChildren().get(0)).getText())
-                .toList();
+        addRecordSelectTypeOfWashing.setItems(FXCollections.observableArrayList("Малий", "Середній", "Великий"));
+        addRecordSelectTypeOfWashing.getSelectionModel().select(0);
+        addRecordSelectTypeOfWashing.setVisibleRowCount(3);
 
+        //calculate salary
+        calcSalarySelectEmp.setItems(FXCollections.observableList(
+                namesOfAllEmps.stream().toList())
+        );
+        calcSalarySelectEmp.getSelectionModel().select(0);
+        calcSalarySelectEmp.setVisibleRowCount(3);
+
+        calcSalaryDate.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            String[] parts = newValue.split("\\.");
+            if (parts.length == 3) {
+                try{
+                    int day = Integer.parseInt(parts[0]);
+                    int month = Integer.parseInt(parts[1]);
+                    int year = Integer.parseInt(parts[2]);
+                    LocalDate selected = LocalDate.of(year,month,day);
+                    calcSalaryButton.setDisable(selected.isAfter(LocalDate.now()));
+                }catch (NumberFormatException | DateTimeException e ){
+                    calcSalaryButton.setDisable(true);
+                }
+
+            } else {
+                calcSalaryButton.setDisable(true);
+            }
+
+        });
     }
-    private HBox createLabelCheckBoxPair(String labelText) {
-        Label label = new Label(labelText);
-        label.setStyle("-fx-font-family: Cambria;-fx-font-size: 16;-fx-text-fill: #242b8b");
-        HBox.setMargin(label, new Insets(0, 0, 10, 0));
+    private HBox createLabelCheckBoxPair(String name) {
+        HBox labelCheckBoxPair = new HBox(10);
+
+        Label labelForName = new Label(name);
+        labelForName.setStyle("-fx-font-family: Cambria;" +
+                "-fx-font-size: 16;" +
+                "-fx-text-fill: #242b8b;" +
+                "-fx-pref-width: 65");
+        HBox.setMargin(labelForName, new Insets(0, 0, 10, 0));
+
         CheckBox checkBox = new CheckBox();
+        checkBox.setOnMouseClicked((e)->{
+            if(checkBox.isSelected())
+                namesOfSelectedEmps.add(name);
+            else
+                namesOfSelectedEmps.remove(name);
+
+            addRecordButton.setDisable(namesOfSelectedEmps.size() == 0);
+            System.out.println(namesOfSelectedEmps);
+        });
         HBox.setMargin(checkBox, new Insets(0, 20, 0, 0));
 
-        HBox pair = new HBox(10); // 10 pixels spacing
-        pair.getChildren().addAll(label, checkBox);
+        labelCheckBoxPair.getChildren().addAll(labelForName, checkBox);
 
-        return pair;
+        return labelCheckBoxPair;
     }
-    public void onAction(){
-       resultPane.setLayoutY(17);
-       mainPane.setDisable(true);
-       line.setVisible(false);
-    }
-    public void onAction2(){
+
+    //add record
+    public void addRecordSelectEmpsButtonOnAction(){
         empsPane.setLayoutY(32);
         mainPane.setDisable(true);
         line.setVisible(false);
     }
-    public void cancelOAction(){
-        resultPane.setLayoutY(300);
-        mainPane.setDisable(false);
-        line.setVisible(true);
-    }
-    public void cancelOAction2(){
+    public void addRecordCancelSelectEmpsButtonOnAction(){
         empsPane.setLayoutY(300);
         mainPane.setDisable(false);
         line.setVisible(true);
     }
+
+    public void addRecordButtonOnAction(){
+        apiService.addRecord(namesOfSelectedEmps,
+                getPriceForTypeOfWashing(addRecordSelectTypeOfWashing.getValue()));
+    }
+    private Double getPriceForTypeOfWashing(String type){
+        return switch (type){
+            case "Малий" -> 250.;
+            case "Середній" -> 350.;
+            case "Великий" -> 500.;
+            default -> throw new IllegalArgumentException("ERROR. Invalid type");
+        };
+    }
+
+    //calculate salary
+    public void calcSalaryButtonOnAction(){
+        resultPane.setLayoutY(17);
+        mainPane.setDisable(true);
+        line.setVisible(false);
+
+        String nameOfEmp = calcSalarySelectEmp.getValue();
+        LocalDate selectedDate = calcSalaryDate.getValue();
+        Double salary = apiService.calcSalary(nameOfEmp, selectedDate);
+        resultLabel.setText(nameOfEmp + " за " + selectedDate + " повинен отримати " + salary + "грн.");
+    }
+    public void resultCancelButtonOnAction(){
+        resultPane.setLayoutY(300);
+        mainPane.setDisable(false);
+        line.setVisible(true);
+    }
+
 }
