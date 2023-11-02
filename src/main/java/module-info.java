@@ -5,6 +5,6 @@ module com.example.teamdeveloping {
     requires org.json;
 
 
-    opens com.example.teamdeveloping to javafx.fxml;
-    exports com.example.teamdeveloping;
+    opens com.example.frontend to javafx.fxml;
+    exports com.example.frontend;
 }

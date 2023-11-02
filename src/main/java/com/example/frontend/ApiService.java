@@ -1,4 +1,4 @@
-package com.example.teamdeveloping;
+package com.example.frontend;
 
 import okhttp3.*;
 import org.json.JSONArray;

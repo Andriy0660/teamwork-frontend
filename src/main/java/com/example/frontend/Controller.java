@@ -1,6 +1,7 @@
-package com.example.teamdeveloping;
+package com.example.frontend;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -32,6 +33,10 @@ public class Controller {
     private ComboBox<String> addRecordSelectTypeOfWashing;
     @FXML
     private Button addRecordButton;
+    @FXML
+    private Pane empsPane;
+    @FXML
+    private VBox empsBox;
 
     //calculate salary
     @FXML
@@ -44,10 +49,6 @@ public class Controller {
     //result
     @FXML
     private Label resultLabel;
-    @FXML
-    private Pane empsPane;
-    @FXML
-    private VBox empsBox;
 
     public void initialize(){
         //add record
@@ -127,6 +128,11 @@ public class Controller {
     public void addRecordButtonOnAction(){
         apiService.addRecord(namesOfSelectedEmps,
                 getPriceForTypeOfWashing(addRecordSelectTypeOfWashing.getValue()));
+
+        empsBox.getChildren()
+                .forEach(e -> ((CheckBox)((HBox)e).getChildren().get(1)).setSelected(false));
+        addRecordButton.setDisable(true);
+        namesOfSelectedEmps.clear();
     }
     private Double getPriceForTypeOfWashing(String type){
         return switch (type){
