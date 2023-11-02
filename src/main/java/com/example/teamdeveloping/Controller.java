@@ -9,8 +9,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 
+import java.text.DecimalFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 
@@ -49,11 +51,7 @@ public class Controller {
 
     public void initialize(){
         //add record
-        //namesOfAllEmps = apiService.getAllEmps();
-        namesOfAllEmps = new HashSet<>();
-        namesOfAllEmps.add("Микола");
-        namesOfAllEmps.add("Петро");
-        namesOfAllEmps.add("Василь");
+        namesOfAllEmps = apiService.getNamesOfAllEmps();
 
         List<HBox> namesAndCheckBoxesForAllEmps = namesOfAllEmps.stream().map(this::createLabelCheckBoxPair).toList();
         empsBox.getChildren().addAll(namesAndCheckBoxesForAllEmps);
@@ -106,7 +104,6 @@ public class Controller {
                 namesOfSelectedEmps.remove(name);
 
             addRecordButton.setDisable(namesOfSelectedEmps.size() == 0);
-            System.out.println(namesOfSelectedEmps);
         });
         HBox.setMargin(checkBox, new Insets(0, 20, 0, 0));
 
@@ -148,8 +145,10 @@ public class Controller {
 
         String nameOfEmp = calcSalarySelectEmp.getValue();
         LocalDate selectedDate = calcSalaryDate.getValue();
-        Double salary = apiService.calcSalary(nameOfEmp, selectedDate);
-        resultLabel.setText(nameOfEmp + " за " + selectedDate + " повинен отримати " + salary + "грн.");
+        double salary = apiService.calcSalary(nameOfEmp, selectedDate);
+        DecimalFormat df = new DecimalFormat("0.00");
+        resultLabel.setText(nameOfEmp + " за " + selectedDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) +
+                " повинен отримати " + df.format(salary) + "грн.");
     }
     public void resultCancelButtonOnAction(){
         resultPane.setLayoutY(300);

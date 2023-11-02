@@ -29,25 +29,26 @@
             <DatePicker fx:id="calcSalaryDate" layoutX="219.0" layoutY="93.0" prefHeight="38.0" prefWidth="150.0" promptText="01.11.2023" style="-fx-font-family: Cambria; -fx-font-size: 16; -fx-background-radius: 8; -fx-border-radius: 8;" />
             <Button fx:id="calcSalaryButton" disable="true" layoutX="219.0" layoutY="145.0" mnemonicParsing="false" onAction="#calcSalaryButtonOnAction" prefHeight="38.0" prefWidth="150.0" style="-fx-font-family: Cambria; -fx-font-size: 16;" styleClass="button1" text="Обчислити" />
             <Line fx:id="line" endX="7.0" endY="142.57139587402344" layoutX="120.0" layoutY="-28.0" rotate="90.0" startX="151.0" startY="142.03929138183594" stroke="#242b8b" />
-         <Button fx:id="addRecordSelectEmpsButton" layoutX="27.0" layoutY="41.0" mnemonicParsing="false" onAction="#addRecordSelectEmpsButtonOnAction" prefHeight="38.0" prefWidth="150.0" style="-fx-font-family: Cambria; -fx-font-size: 16;" styleClass="button1" text="Працівники" />
+         <Button layoutX="27.0" layoutY="41.0" mnemonicParsing="false" onAction="#addRecordSelectEmpsButtonOnAction" prefHeight="38.0" prefWidth="150.0" style="-fx-font-family: Cambria; -fx-font-size: 16;" styleClass="button1" text="Працівники" />
         </Pane>
-        <Pane fx:id="resultPane" layoutX="217.0" layoutY="300.0" prefHeight="118.0" prefWidth="153.0" style="-fx-background-radius: 15; -fx-border-color: #242b8b; -fx-border-radius: 15; -fx-background-color: #dce9ff;">
-            <Label fx:id="resultLabel" layoutX="8.0" layoutY="4.0" prefHeight="64.0" prefWidth="150.0" text="Іван за 01.11.2023 повинен отримати  200грн" textFill="#242b8b" wrapText="true">
+        <Pane fx:id="resultPane" layoutX="208.0" layoutY="300.0" prefHeight="118.0" prefWidth="173.0" style="-fx-background-radius: 15; -fx-border-color: #242b8b; -fx-border-radius: 15; -fx-background-color: #dce9ff;">
+            <Label fx:id="resultLabel" layoutX="8.0" layoutY="4.0" prefHeight="64.0" prefWidth="160.0" text="Микола за 01.11.2023 повинен отримати  200грн" textFill="#242b8b" wrapText="true">
                 <font>
                     <Font name="Cambria" size="16.0" />
                 </font>
             </Label>
-            <Button fx:id="cancelButton" layoutX="28.0" layoutY="79.0" mnemonicParsing="false" onAction="#resultCancelButtonOnAction" prefWidth="100.0" styleClass="button1" text="Назад" />
+            <Button layoutX="28.0" layoutY="79.0" mnemonicParsing="false" onAction="#resultCancelButtonOnAction" prefWidth="120.0" styleClass="button1" text="Назад" />
         </Pane>
-      <Pane fx:id="empsPane" layoutX="217.0" layoutY="500.0" prefHeight="134.0" prefWidth="153.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-background-color: #dce9ff; -fx-border-color: #242b8b;">
-         <children>
-            <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="14.0" prefHeight="68.0" prefWidth="128.0" style="-fx-background-color: transparent;">
-              <content>
-                  <VBox fx:id="empsBox" layoutX="5.0" layoutY="3.0" prefHeight="68.0" prefWidth="128.0" style="-fx-background-color: #dce9ff;" />
-              </content>
+        <Pane fx:id="empsPane" layoutX="217.0" layoutY="500.0" prefHeight="134.0" prefWidth="153.0"
+              style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-background-color: #dce9ff; -fx-border-color: #242b8b;">
+            <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="14.0" prefHeight="68.0" prefWidth="128.0"
+                        style="-fx-background-color: transparent;">
+                <VBox fx:id="empsBox" layoutX="5.0" layoutY="3.0" prefHeight="68.0" prefWidth="128.0"
+                      style="-fx-background-color: #dce9ff;"/>
             </ScrollPane>
-            <Button layoutX="16.0" layoutY="95.0" mnemonicParsing="false" onAction="#addRecordCancelSelectEmpsButtonOnAction" prefWidth="115.0" styleClass="button1" text="Назад" />
-         </children>
-      </Pane>
+            <Button layoutX="16.0" layoutY="95.0" mnemonicParsing="false"
+                    onAction="#addRecordCancelSelectEmpsButtonOnAction" prefWidth="115.0" styleClass="button1"
+                    text="Назад"/>
+        </Pane>
     </children>
 </Pane>
